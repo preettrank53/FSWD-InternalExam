@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Submission System</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1><i class="fas fa-file-alt"></i> Resume Submission Portal</h1>
+            <p class="subtitle">Upload your resume and get AI-powered feedback</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="submission-tab">Submit Resume</button>
+            <button class="tab-btn" data-tab="tracking-tab">Track Status</button>
+            <button class="tab-btn" data-tab="rankings-tab">Rankings</button>
+            <button class="tab-btn" data-tab="formats-tab">Resume Formats</button>
+        </div>
+        
+        <div id="submission-tab" class="tab-content active">
+            <div class="card">
+                <form id="resumeForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name"><i class="fas fa-user"></i> Full Name:</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email"><i class="fas fa-envelope"></i> Email:</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="phone"><i class="fas fa-phone"></i> Phone Number:</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="linkedin"><i class="fab fa-linkedin"></i> LinkedIn Profile:</label>
+                            <input type="url" id="linkedin" name="linkedin" placeholder="https://linkedin.com/in/yourprofile">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="education"><i class="fas fa-graduation-cap"></i> Education:</label>
+                        <textarea id="education" name="education" rows="3" required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="skills"><i class="fas fa-code"></i> Skills:</label>
+                        <textarea id="skills" name="skills" rows="3" required placeholder="List your skills separated by commas"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="experience"><i class="fas fa-briefcase"></i> Work Experience:</label>
+                        <textarea id="experience" name="experience" rows="3" required></textarea>
+                    </div>
+                    
+                    <div class="form-group upload-area">
+                        <label for="resume"><i class="fas fa-file-pdf"></i> Upload Resume (PDF only):</label>
+                        <input type="file" id="resume" name="resume" accept=".pdf" required>
+                        <div class="upload-preview">
+                            <p>No file selected</p>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" id="previewBtn" class="secondary-btn"><i class="fas fa-eye"></i> Preview</button>
+                        <button type="submit" id="submitBtn" class="primary-btn"><i class="fas fa-paper-plane"></i> Submit Resume</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div id="tracking-tab" class="tab-content">
+            <div class="card">
+                <h2><i class="fas fa-search"></i> Track Your Submission</h2>
+                <div class="search-form">
+                    <input type="text" id="trackingId" placeholder="Enter your submission ID">
+                    <button id="trackBtn" class="primary-btn"><i class="fas fa-search"></i> Track</button>
+                </div>
+                <div id="statusResult"></div>
+            </div>
+            
+            <div class="card">
+                <h2><i class="fas fa-list"></i> Recent Submissions</h2>
+                <ul id="submissionList" class="submission-list"></ul>
+            </div>
+        </div>
+        
+        <div id="rankings-tab" class="tab-content">
+            <div class="card">
+                <h2><i class="fas fa-trophy"></i> Resume Rankings</h2>
+                <p>See how your resume compares to others in our database.</p>
+                
+                <div class="ranking-stats">
+                    <div class="ranking-stat">
+                        <span id="totalResumes">0</span>
+                        <p>Total Resumes</p>
+                    </div>
+                    <div class="ranking-stat">
+                        <span id="averageScore">0</span>
+                        <p>Average Score</p>
+                    </div>
+                    <div class="ranking-stat">
+                        <span id="topScore">0</span>
+                        <p>Top Score</p>
+                    </div>
+                </div>
+                
+                <div class="ranking-table-container">
+                    <table class="ranking-table">
+                        <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Name</th>
+                                <th>Score</th>
+                                <th>Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rankingTableBody">
+                            <!-- Rankings will be inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div id="formats-tab" class="tab-content">
+            <div class="card">
+                <h2><i class="fas fa-file-alt"></i> Generate Resume in Different Formats</h2>
+                <p>Convert your resume to different formats for various applications.</p>
+                
+                <div class="formats-grid">
+                    <div class="format-card">
+                        <i class="fas fa-file-pdf"></i>
+                        <h3>PDF Format</h3>
+                        <p>Standard format for job applications</p>
+                        <button class="format-btn" data-format="pdf">Generate</button>
+                    </div>
+                    
+                    <div class="format-card">
+                        <i class="fas fa-file-word"></i>
+                        <h3>DOCX Format</h3>
+                        <p>Editable format for Microsoft Word</p>
+                        <button class="format-btn" data-format="docx">Generate</button>
+                    </div>
+                    
+                    <div class="format-card">
+                        <i class="fas fa-file-code"></i>
+                        <h3>JSON Format</h3>
+                        <p>For developer APIs and integrations</p>
+                        <button class="format-btn" data-format="json">Generate</button>
+                    </div>
+                    
+                    <div class="format-card">
+                        <i class="fas fa-file"></i>
+                        <h3>Plain Text</h3>
+                        <p>Simple format for copy-pasting</p>
+                        <button class="format-btn" data-format="txt">Generate</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal for Resume Preview -->
+    <div id="previewModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Resume Preview</h2>
+            <div id="resumePreview"></div>
+            <div class="modal-actions">
+                <button id="editResumeBtn" class="secondary-btn"><i class="fas fa-edit"></i> Edit</button>
+                <button id="confirmSubmitBtn" class="primary-btn"><i class="fas fa-check"></i> Confirm & Submit</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal for AI Analysis -->
+    <div id="analysisModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2><i class="fas fa-robot"></i> AI Resume Analysis</h2>
+            
+            <div class="score-container">
+                <div class="score-circle">
+                    <span id="resumeScore">0</span><span>%</span>
+                </div>
+                <p>Resume Score</p>
+            </div>
+            
+            <div class="ranking-info">
+                <p>Your resume ranks <span id="resumeRank">0</span> out of <span id="totalRankedResumes">0</span></p>
+                <p>You are in the top <span id="resumePercentile">0</span>% of all resumes</p>
+            </div>
+            
+            <div id="analysisResults">
+                <div class="analysis-section">
+                    <h3>Strengths</h3>
+                    <ul id="strengthsList"></ul>
+                </div>
+                <div class="analysis-section">
+                    <h3>Areas for Improvement</h3>
+                    <ul id="improvementsList"></ul>
+                </div>
+                <div class="analysis-section">
+                    <h3>Suggestions</h3>
+                    <ul id="suggestionsList"></ul>
+                </div>
+            </div>
+            
+            <div class="feedback-section">
+                <h3>Was this analysis helpful?</h3>
+                <div class="feedback-rating">
+                    <span class="star" data-rating="1"><i class="far fa-star"></i></span>
+                    <span class="star" data-rating="2"><i class="far fa-star"></i></span>
+                    <span class="star" data-rating="3"><i class="far fa-star"></i></span>
+                    <span class="star" data-rating="4"><i class="far fa-star"></i></span>
+                    <span class="star" data-rating="5"><i class="far fa-star"></i></span>
+                </div>
+                <textarea id="feedbackComments" placeholder="Additional feedback (optional)"></textarea>
+                <button id="submitFeedbackBtn" class="secondary-btn"><i class="fas fa-paper-plane"></i> Submit Feedback</button>
+            </div>
+            
+            <div class="modal-actions">
+                <button id="downloadAnalysisBtn" class="secondary-btn"><i class="fas fa-download"></i> Download Analysis</button>
+                <button id="closeAnalysisBtn" class="primary-btn"><i class="fas fa-check"></i> Got it</button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="message"></div>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Resume Submission System. Created for IT107 Exam.</p>
+        </div>
+    </footer>
+    
+    <script src="script.js"></script>
+</body>
+</html> 
